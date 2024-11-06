@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href='https://fonts.googleapis.com/css?family=Pixelify Sans' rel='stylesheet'>
+	<link href='styles.css' rel='stylesheet'>
+	<link rel="icon" type="image/x-icon" href="images/mushroom2.png">
+	<title>Play | Adventures of Bip</title>
+</head>
+
+<body class="forest_background">
+
+<div id="rotate-screen">
+	<p>Please rotate your device to landscape mode<br>or widen the browser window.<br><br>Don't worry, you will not loose your game data!</p>
+  <img src="images/rotate.png" style="width:100px" alt="Rotate Icon">
+</div>
+<div id="game-content">
+  <div id="homescreen">
+    <div id="title">
+      <img class="title" src="images/logo.png" alt="Adventures of Bips: Trials of the Mushroom">
+    </div>
+    
+    <div class="play" id="play">
+      <button id="changeStyle" class="play-button">
+        <img src="images/sword.png" alt="Play">
+          <h1>Play</h1>
+      </button>
+    
+      <h1>Settings</h1>
+      <div class="toggle-button">
+        <p>Play Sound</p>
+        <label class="switch">
+          <input type="checkbox" id="sound" checked>
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div class="toggle-button">
+          <p>Play Music</p>
+          <label class="switch">
+            <input type="checkbox" id="music">
+            <span class="slider round"></span>
+          </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="setting" class="settings hidden">
+    <div class="toggle-button">
+      <p>Play Sound</p>
+      <label class="switch2">
+        <input type="checkbox" id="sound2" checked>
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="toggle-button">
+        <p>Play Music</p>
+        <label class="switch2">
+          <input type="checkbox" id="music2">
+          <span class="slider round"></span>
+        </label>
+    </div>
+  </div>
+  
+  <div class="main_text_box hidden" id="game">
+    <div class="battlePage" id="div1">
+      <div>
+        <!--The attack button.-->
+        <button id="attack" onclick="openAttacks()">
+          <img src="images/attack.png" alt="stick_icon" class="stick_icon">
+          <h1>Attack</h1>
+        </button>	
+        <br>
+        <!--The items button.-->
+        <button id="items" onclick="openInventory()">
+          <img src="images/pouch.png" alt="pouch_icon" class="pouch_icon" />
+          <h1>Items</h1>
+        </button>
+      </div>
+      <div class="bars">
+        <p><span id="bhpn">Opponent</span>'s HP - <span id="bhp">0</span>/<span id="bhpm">0</span></p><progress class="bossBar" id="BossBar" value="0" max="200"></progress> <!--health bars. Value = current hp, max = the highest amount of hp possible -->
+        <p>Player's HP - <span id="php">200</span>/200</p><progress class="playerBar" id="PlayerBar" value="200" max="200"></progress>
+      </div>
+    </div>
+    <div class="inventory hidden" id="div2">
+      <div class="slot-back" id="back" onclick="back()">
+        <img src="images/arrow.png" alt="arrow"/>
+        <p class="item_name">Go Back</p>
+      </div>
+      <div class="slot" id="heal" onclick="heal()">
+        <img src="images/sandwich.png" style="width:100px;"alt="sandwich" id="sandwich"/>
+        <p class="item_name">Mom's Sandwich</p>
+      </div>
+      <div class="slot" id="luck" onclick="CloverOn()">
+        <img src="images/clover.png" alt="clover"/>
+        <p class="item_name">Lucky<br>Clover</p>
+      </div>
+      <div class="description" id="descriptions2">
+        <p class="item_description" id="basic2">Hover over an item to view description</p>
+      </div>
+    </div>
+    <div class="attacks hidden" id="div3">
+      <div class="slot-back" id="back2" onclick="back()">
+        <img src="images/arrow.png" alt="arrow"/>
+        <p class="item_name">Go Back</p>
+      </div>
+      <div class="slot" id="sword" onclick="attack1()">
+        <img src="images/sword.png" alt="sword"/>
+        <p class="item_name">Sword<br>Slash</p>
+      </div>
+      <div class="slot" id="rock" onclick="attack2()">
+        <img src="images/rock.png" alt="rock"/>
+        <p class="item_name">Rock<br>Throw</p>
+      </div>
+      <div class="description" id="descriptions">
+        <p class="item_description" id="basic">Hover over an attack to view description</p>
+      </div>
+    </div>
+    <div class="text hidden" id="div4">
+      <div onclick="hideAndWipe()" id="hideButton">Continue...</div>
+    </div>
+  </div> 
+  
+  <div>
+    <div class="tutorial-begin hidden" id="tutorial-start">
+      <p>Start Tutorial?</p>
+      <div class="next" onclick="pretutorial1()">Yes</div>
+      <div class="next" onclick="moveNo()">No</div>
+    </div>
+    <div class="tutorial hidden" id="attack-description">
+      <p>This button will take you into your attack menu, hosting options that will <b>damange</b> your opponent.</p>
+      <p>Take care when selecting these moved as hurting things makes enemies</p>
+      <div class="next hidden" onclick="move2()" id="m2">Next</div>
+    </div>
+    <div class="tutorial hidden" id="items-description">
+      <p>This button will take you into your items menu, hosting options that will <b>affact</b> you or your opponents in some way</p>
+      <p>I would look here if your even in a pinch or want an extra boost in battle</p>
+      <div class="next hidden" onclick="move3()" id="m3">Next</div>
+    </div>
+    <div class="tutorial hidden" id="bosshp-description">
+      <p>This bar represents how much HP your <b>opponent</b> has.</p>
+      <p>The bar will decrease or increase by certain amounts depending on which actions either you or your opponent performs.</p>
+      <div class="next hidden" onclick="move4()" id="m4">Next</div>
+    </div>
+    <div class="tutorial hidden" id="playerhp-description">
+      <p>This bar represents how much HP you, the <b>player</b>, has.</p>
+      <p>The bar will decrease or increase by certain amounts depending on which actions either you or your opponent performs.</p>
+      <div class="next hidden" onclick="move5()" id="m5">Next</div>
+    </div>
+    <div class="tutorial hidden" id="back-description">
+      <ins><em>Attack Menu</ins></em>
+      <p>This button will take you back to the main Battle Menu</p>
+      <div class="next hidden" onclick="move6()" id="m6">Next</div>
+    </div>
+    <div class="tutorial hidden" id="attack1-description">
+      <ins><em>Attack Menu</ins></em>
+      <p>This button will activate an offensive attack on your opponent</p>
+      <div class="next hidden" onclick="move7()" id="m7">Next</div>
+    </div>
+    <div class="tutorial hidden" id="attack2-description">
+      <ins><em>Attack Menu</ins></em>
+      <p>This button will activate an offensive attack on your opponent</p>
+      <div class="next hidden" onclick="move8()" id="m8">Next</div>
+    </div>
+    <div class="tutorial hidden" id="descriptions-description">
+      <ins><em>Attack Menu</ins></em>
+      <p>When hovering over different attacks, this will display a unique discription for that attack</p>
+      <div class="next hidden" onclick="move9()" id="m9">Next</div>
+    </div>
+    <div class="tutorial hidden" id="back2-description">
+      <ins><em>Item Menu</ins></em>
+      <p>This button will take you back to the main Battle Menu</p>
+      <div class="next hidden" onclick="move10()" id="m10">Next</div>
+    </div>
+    <div class="tutorial hidden" id="heal-description">
+      <ins><em>Item Menu</ins></em>
+      <p>This button will activate a item that has a unique affect on the player or opponent</p>
+      <div class="next hidden" onclick="move11()" id="m11">Next</div>
+    </div>
+    <div class="tutorial hidden" id="luck-description">
+      <ins><em>Item Menu</ins></em>
+      <p>This button will activate a item that has a unique affect on the player or opponent</p>
+      <div class="next hidden" onclick="move12()" id="m12">Next</div>
+    </div>
+    <div class="tutorial hidden" id="descriptions2-description">
+      <ins><em>Item Menu</ins></em>
+      <p>When hovering over different items, this will display a unique discription for that item</p>
+      <div class="next hidden" onclick="finish_tutorial()" id="m13">Next</div>
+    </div>
+    <div class="tutorial hidden" id="finish-description">
+      <p>Now use what you have learned on this defensless butterfly</p>
+      <div class="next hidden" onclick="finish_tutorial_2()" id="m14">BATTLE</div>
+    </div>
+  </div>
+
+  <img id="animate" src="images/tarrow.png" class="tarrow">
+  <audio id="loadingSound" src="/sounds/dialog_sound.wav"></audio>
+  <audio id="gamemusic" src="/sounds/game_music.mp3" loop></audio>
+  <audio id="toadmusic" src="/sounds/toad_music.mp3" loop></audio>
+  
+  <div class="sprites">
+    <img src="images/bip_stick.png" class="child" id="childsprite">
+    <img src="images/butterfly.png" class="butterfly" id="pitifulButterfly">
+    <img src="images/explosion.gif" class="explosion hidden" id="explosion">
+    <img src="images/toad.gif" class="toad" id="toadsprite"> <!--hidden in the beginning as he come in later-->
+  </div>
+</div>
+<script src="scripts.js"></script>
+</body>
+</html>
